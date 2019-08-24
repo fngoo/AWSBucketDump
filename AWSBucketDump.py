@@ -48,17 +48,16 @@ def bucket_worker():
             print(e)
         bucket_q.task_done()
 
-#def downloadWorker():
- #   print('Download worker running...')
- #   while True:
- #      item = download_q.get()
- #      try:
- #          downloadFile(item)
- #      except Exception as e:
- #         traceback.print_exc(file=sys.stdout)
- #          print(e)
- #    download_q.task_done()
-
+def downloadWorker():
+    print('Download worker running...')
+    while True:
+        item = download_q.get()
+        try:
+            downloadFile(item)
+        except Exception as e:
+            traceback.print_exc(file=sys.stdout)
+            print(e)
+        download_q.task_done()
 directory_lock = Lock()
 
 def get_directory_lock():
