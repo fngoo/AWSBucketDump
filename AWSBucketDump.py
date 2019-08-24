@@ -48,16 +48,16 @@ def bucket_worker():
             print(e)
         bucket_q.task_done()
 
-def downloadWorker():
-    print('Download worker running...')
-    while True:
-        item = download_q.get()
-        try:
-            downloadFile(item)
-        except Exception as e:
-            traceback.print_exc(file=sys.stdout)
-            print(e)
-        download_q.task_done()
+#def downloadWorker():
+ #   print('Download worker running...')
+ #   while True:
+ #      item = download_q.get()
+ #      try:
+ #          downloadFile(item)
+ #      except Exception as e:
+ #         traceback.print_exc(file=sys.stdout)
+ #          print(e)
+ #    download_q.task_done()
 
 directory_lock = Lock()
 
@@ -105,23 +105,23 @@ def write_interesting_file(filepath):
     
 
 
-def downloadFile(filename):
-    global arguments
-    print('Downloading {}'.format(filename) + '...')
-    local_path = get_make_directory_return_filename_path(filename)
-    local_filename = (filename.split('/')[-1]).rstrip()
-    print('local {}'.format(local_path))
-    if local_filename =="":
-        print("Directory..\n")
-    else:
-        r = requests.get(filename.rstrip(), stream=True)
-        if 'Content-Length' in r.headers:
-            if int(r.headers['Content-Length']) > arguments.maxsize:
-                print("This file is greater than the specified max size... skipping...\n")
-            else:
-                with open(local_path, 'wb') as f:
-                    shutil.copyfileobj(r.raw, f)
-        r.close()
+#def downloadFile(filename):
+#    global arguments
+#    print('Downloading {}'.format(filename) + '...')
+#    local_path = get_make_directory_return_filename_path(filename)
+#    local_filename = (filename.split('/')[-1]).rstrip()
+#    print('local {}'.format(local_path))
+#    if local_filename =="":
+#        print("Directory..\n")
+#    else:
+#        r = requests.get(filename.rstrip(), stream=True)
+#        if 'Content-Length' in r.headers:
+#            if int(r.headers['Content-Length']) > arguments.maxsize:
+#                print("This file is greater than the specified max size... skipping...\n")
+#            else:
+#                with open(local_path, 'wb') as f:
+#                    shutil.copyfileobj(r.raw, f)
+#        r.close()
 
 
 
